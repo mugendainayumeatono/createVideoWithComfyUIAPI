@@ -251,6 +251,6 @@ def create_video_ITV(create_num=10):
 
 if __name__ == "__main__":
     #create_picture(3)
-    create_video_ITV(2)
+    create_video_ITV(10)
 
 

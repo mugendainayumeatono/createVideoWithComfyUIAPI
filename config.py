@@ -6,21 +6,21 @@ import random
 log_level = logging.DEBUG
 server_address = "js1.blockelite.cn:21667"
 output_folder = "output"
-prompt_file_optimize = r"prompts\prompt_file_optimize.csv"
-prompt_file_backdrop = r"prompts\prompt_file_backdrop.csv"
-prompt_file_role = r"prompts\prompt_file_role.csv"
-prompt_file_pose = r"prompts\prompt_file_pose.csv"
-prompt_file_ITV = r"prompts\prompt_file_pose.csv"
+prompt_file_optimize = r"prompts/prompt_file_optimize.csv"
+prompt_file_backdrop = r"prompts/prompt_file_backdrop.csv"
+prompt_file_role = r"prompts/prompt_file_role.csv"
+prompt_file_pose = r"prompts/prompt_file_pose.csv"
+prompt_file_ITV = r"prompts/prompt_file_pose.csv"
 one_prompt_multi_create = 1
 
 #flux 设定
-FLUXD_workflow = r"workflow\FLUXD_v1_workflow.json"
+FLUXD_workflow = r"workflow/FLUXD_v1_workflow.json"
 prompt_file_set_picture = [prompt_file_optimize, prompt_file_backdrop, prompt_file_role, prompt_file_pose]
 
 #wan-video 设定
-wan_workflow = r"workflow\wanvideo_480p_I2V_API.json"
-#wan_intput_image_path = "/home/hdd1/sd-scripts/resource/resource4_perprocess1_small_unifiedsize"
-wan_intput_image_path = r"C:\userfile\02_data\AI\resource4_perprocess1_small_200\resource4_perprocess2_small_unifiedsize"
+wan_workflow = r"workflow/wanvideo_480p_I2V_API.json"
+wan_intput_image_path = "/home/hdd1/sd-scripts/resource/resource4_perprocess1_small_unifiedsize"
+#wan_intput_image_path = r"C:\userfile\02_data\AI\resource4_perprocess1_small_200\resource4_perprocess2_small_unifiedsize"
 wan_output_file_name = "create_test"
 prompt_file_set_video = [prompt_file_ITV]
 
@@ -42,10 +42,13 @@ def process_csv_to_array(file_path, separator=','):
             
             for row_idx, row in enumerate(csv_reader, 1):
                 if len(row) > 2:
-                    # 拼接第3列（索引2）之后的列
-                    concatenated = separator.join(row[3:])
-                    result_array.append(concatenated)
-                    logging.debug(f"第 {row_idx} 行: {concatenated}")
+                    if row[2] == "enable":
+                        # 拼接第3列（索引2）之后的列
+                        concatenated = separator.join(row[3:])
+                        result_array.append(concatenated)
+                        logging.debug(f"第 {row_idx} 行(enable): {concatenated}")
+                    else:
+                        logging.debug(f"第 {row_idx} 行(disable): {concatenated}")
                 else:
                     # 少于3列时添加空字符串
                     result_array.append('')

@@ -62,10 +62,12 @@ class workflow_wan(workflow):
 
     def set_workflow_param(self):
         logging.info(f"设置参数...")
+        """
         nodeNum = self.searchWorkflowNode("WanVideoSampler")
         if nodeNum is not None:
             self.prompt_json[nodeNum]["inputs"]["steps"] = 1
-            logging.debug(f"set steps = {1}")
+            logging.debug(f"set steps = {1}")"
+        """
 
         nodeNum = self.searchWorkflowNode("VHS_VideoCombine")
         if nodeNum is not None:
