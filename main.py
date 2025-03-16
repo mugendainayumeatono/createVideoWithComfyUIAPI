@@ -2,7 +2,7 @@
 #Once the prompt execution is done it downloads the images using the /history endpoint
 
 import logging
-logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s %(filename)s:%(lineno)d - %(message)s')
 import websocket #NOTE: websocket-client (https://github.com/websocket-client/websocket-client)
 import uuid
 import json
@@ -251,6 +251,6 @@ def create_video_ITV(create_num=10):
 
 if __name__ == "__main__":
     #create_picture(3)
-    create_video_ITV(2)
+    create_video_ITV(32)# 每张11分钟，32张大概6小时完成
 
 
