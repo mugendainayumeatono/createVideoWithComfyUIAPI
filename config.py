@@ -4,13 +4,14 @@ import random
 
 # 全局设定
 log_level = logging.DEBUG
-server_address = "js1.blockelite.cn:21667"
+#server_address = "js1.blockelite.cn:21667"
+server_address = "127.0.0.1:8803"
 output_folder = "output"
 prompt_file_optimize = r"prompts/prompt_file_optimize.csv"
 prompt_file_backdrop = r"prompts/prompt_file_backdrop.csv"
 prompt_file_role = r"prompts/prompt_file_role.csv"
 prompt_file_pose = r"prompts/prompt_file_pose.csv"
-prompt_file_ITV = r"prompts/prompt_file_pose.csv"
+prompt_file_ITV = r"prompts/prompt_file_ITV.csv"
 one_prompt_multi_create = 1
 
 #flux 设定
@@ -42,9 +43,9 @@ def process_csv_to_array(file_path, separator=','):
             
             for row_idx, row in enumerate(csv_reader, 1):
                 if len(row) > 2:
-                    if row[2] == "enable":
+                    concatenated = separator.join(row[3:])
+                    if row[1] == "enable":
                         # 拼接第3列（索引2）之后的列
-                        concatenated = separator.join(row[3:])
                         result_array.append(concatenated)
                         logging.debug(f"第 {row_idx} 行(enable): {concatenated}")
                     else:
