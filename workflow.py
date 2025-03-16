@@ -47,13 +47,11 @@ class workflow:
 class workflow_wan(workflow):
     def set_workflow_prompt_word(self,prompt_word):
         logging.info(f"设置提示词...")
-        '''
-        nodeNum = self.searchWorkflowNode(prompt, "CLIPTextEncode")
+        
+        nodeNum = self.searchWorkflowNode("WanVideoTextEncode")
         if nodeNum is not None:
-            prompt[nodeNum]["inputs"]["text"] = prompt_word
-            logging.debug(f"set prompt = {prompt_word}")'
-        '''
-        logging.debug(f"pass")
+            self.prompt_json[nodeNum]["inputs"]["positive_prompt"] = prompt_word
+            logging.debug(f"set prompt = {prompt_word}")
 
     def set_workflow_source_image(self,imagePatch):
         logging.info(f"设置图片源...")
