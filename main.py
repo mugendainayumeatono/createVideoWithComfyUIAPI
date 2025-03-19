@@ -225,6 +225,7 @@ def create_video_ITV(create_num=10):
     dir_path = Path(config.wan_intput_image_path)
     jpg_files = list(dir_path.rglob("*.[jJ][pP][gG]"))  # 支持大小写
     jpg_files.extend(dir_path.rglob("*.[jJ][pP][eE][gG]"))  # 支持 .jpeg
+    jpg_files.extend(dir_path.rglob("*.[pP][nN][gG]"))  # 支持 .jpeg
     # 依次处理每个文件
     create_counter=0
     for jpg_file in jpg_files:
