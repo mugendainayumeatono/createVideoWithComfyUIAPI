@@ -15,14 +15,14 @@ prompt_file_ITV = r"prompts/prompt_file_ITV.csv"
 one_prompt_multi_create = 1
 
 #flux 设定
-FLUXD_workflow = r"workflow/FLUXD_v1_workflow.json"
+FLUXD_workflow = r"workflow/FLUXD_v2_workflow_API.json"
 prompt_file_set_picture = [prompt_file_optimize, prompt_file_backdrop, prompt_file_role, prompt_file_pose]
 
 #wan-video 设定
 wan_workflow = r"workflow/wanvideo_480p_I2V_API.json"
-wan_intput_image_path = "/home/hdd1/sd-scripts/resource/resource4_perprocess1_small_unifiedsize"
+wan_intput_image_path = "input"
 #wan_intput_image_path = r"C:\userfile\02_data\AI\resource4_perprocess1_small_200\resource4_perprocess2_small_unifiedsize"
-wan_output_file_name = "create_test"
+wan_output_file_name = "I2V_20250320_"
 prompt_file_set_video = [prompt_file_ITV]
 
 def process_csv_to_array(file_path, separator=','):

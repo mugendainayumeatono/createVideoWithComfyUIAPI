@@ -1,0 +1,224 @@
+{
+  "4": {
+    "inputs": {
+      "ckpt_name": "flux_dev.safetensors"
+    },
+    "class_type": "CheckpointLoaderSimple",
+    "_meta": {
+      "title": "Checkpoint加载器（简易）"
+    }
+  },
+  "6": {
+    "inputs": {
+      "text": "masterpiece, best quality, realistic, photo, bust, real,girl,yuiri,Bunny girl,black strapless top,wearing bunny ears on her head, fake collar, fake cuffs,short pants, huge sagging breasts,too tight,Thick thighs,wide hips,stand near by a wall",
+      "clip": [
+        "312",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP文本编码"
+    }
+  },
+  "8": {
+    "inputs": {
+      "samples": [
+        "294",
+        0
+      ],
+      "vae": [
+        "4",
+        2
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE解码"
+    }
+  },
+  "11": {
+    "inputs": {
+      "clip_name1": "CLIP_sd3/clip_g.safetensors",
+      "clip_name2": "CLIP_sd3/clip_l.safetensors",
+      "clip_name3": "CLIP_sd3/t5xxl_fp8_e4m3fn.safetensors"
+    },
+    "class_type": "TripleCLIPLoader",
+    "_meta": {
+      "title": "三重CLIP加载器"
+    }
+  },
+  "50": {
+    "inputs": {
+      "images": [
+        "8",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "预览图像"
+    }
+  },
+  "67": {
+    "inputs": {
+      "conditioning": [
+        "71",
+        0
+      ]
+    },
+    "class_type": "ConditioningZeroOut",
+    "_meta": {
+      "title": "条件零化"
+    }
+  },
+  "68": {
+    "inputs": {
+      "start": 0.2,
+      "end": 1,
+      "conditioning": [
+        "67",
+        0
+      ]
+    },
+    "class_type": "ConditioningSetTimestepRange",
+    "_meta": {
+      "title": "设置条件时间"
+    }
+  },
+  "69": {
+    "inputs": {
+      "conditioning_1": [
+        "68",
+        0
+      ],
+      "conditioning_2": [
+        "70",
+        0
+      ]
+    },
+    "class_type": "ConditioningCombine",
+    "_meta": {
+      "title": "条件合并"
+    }
+  },
+  "70": {
+    "inputs": {
+      "start": 0,
+      "end": 0.2,
+      "conditioning": [
+        "71",
+        0
+      ]
+    },
+    "class_type": "ConditioningSetTimestepRange",
+    "_meta": {
+      "title": "设置条件时间"
+    }
+  },
+  "71": {
+    "inputs": {
+      "text": "lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry, bad feet,don't have text on the image,breasts Cleavage",
+      "clip": [
+        "302",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP文本编码"
+    }
+  },
+  "135": {
+    "inputs": {
+      "width": 720,
+      "height": 1088,
+      "batch_size": 1
+    },
+    "class_type": "EmptySD3LatentImage",
+    "_meta": {
+      "title": "空Latent图像（SD3）"
+    }
+  },
+  "294": {
+    "inputs": {
+      "seed": 800553058234395,
+      "steps": 30,
+      "cfg": 4,
+      "sampler_name": "euler",
+      "scheduler": "normal",
+      "denoise": 1,
+      "model": [
+        "312",
+        0
+      ],
+      "positive": [
+        "6",
+        0
+      ],
+      "negative": [
+        "69",
+        0
+      ],
+      "latent_image": [
+        "135",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "K采样器"
+    }
+  },
+  "302": {
+    "inputs": {
+      "lora_name": "yuiri_flux_beta3.safetensors",
+      "strength_model": 1,
+      "strength_clip": 1,
+      "model": [
+        "4",
+        0
+      ],
+      "clip": [
+        "4",
+        1
+      ]
+    },
+    "class_type": "LoraLoader",
+    "_meta": {
+      "title": "加载LoRA"
+    }
+  },
+  "303": {
+    "inputs": {
+      "filename_prefix": "yuiri_beta3_20250322_",
+      "images": [
+        "8",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "保存图像"
+    }
+  },
+  "312": {
+    "inputs": {
+      "lora_name": "fluxdBreast/ExtraOomphHugeBreasts.safetensors",
+      "strength_model": 0.5,
+      "strength_clip": 1,
+      "model": [
+        "302",
+        0
+      ],
+      "clip": [
+        "302",
+        1
+      ]
+    },
+    "class_type": "LoraLoader",
+    "_meta": {
+      "title": "加载LoRA"
+    }
+  }
+}
