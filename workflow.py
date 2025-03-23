@@ -1,7 +1,7 @@
 import logging
 import json
 import random
-import config
+from datetime import datetime
 
 class workflow:
     prompt_json = None
@@ -71,5 +71,6 @@ class workflow_wan(workflow):
 
         nodeNum = self.searchWorkflowNode("VHS_VideoCombine")
         if nodeNum is not None:
-            self.prompt_json[nodeNum]["inputs"]["filename_prefix"] = config.wan_output_file_name
-            logging.debug(f"set output file name = {config.wan_output_file_name}")
+            current_time = datetime.now().strftime("%Y%m%d_%H%M%S")
+            self.prompt_json[nodeNum]["inputs"]["filename_prefix"] = current_time
+            logging.debug(f"set output file name = {current_time}")

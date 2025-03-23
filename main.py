@@ -247,7 +247,7 @@ def create_video_ITV(create_num=10):
         for i in range(config.one_prompt_multi_create):
             images = get_videos(ws, obj_workflow,client_id)
             #save_file(images, config.output_folder, "video")
-    logging.info(f"完成，已创建({create_num}张)")
+    logging.info(f"完成，已创建({create_counter})")
     ws.close()
 
 if __name__ == "__main__":
