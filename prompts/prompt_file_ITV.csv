@@ -1,8 +1,9 @@
-1,disable,reserve,看着镜头,轻轻扭动身体,撩起衣服下摆
-2,enable,reserve,看着镜头,缓缓扭动身体
-3,enable,reserve,看着镜头,抚摸身体
-4,disable,reserve,看着镜头,缓缓向前走
-5,enable,reserve,看着镜头,撩头发
-6,enable,reserve,看着镜头,手伸向镜头
-6,enable,reserve,看着镜头,垫脚,身体前倾
-7,enable,reserve,看着镜头,跟着音乐轻轻晃动
+1,disable,0,看着镜头,轻轻扭动身体,撩起衣服下摆
+2,disable,0,看着镜头,缓缓扭动身体
+3,disable,0,看着镜头,抚摸身体
+4,disable,0,看着镜头,缓缓向前走
+5,disable,0,看着镜头,撩头发
+6,disable,0,看着镜头,手伸向镜头
+6,disable,0,看着镜头,垫脚,身体前倾
+7,disable,0,看着镜头,跟着音乐轻轻晃动
+7,enable,1,wan2.1/flying_effect(Wan2.1 I2V LoRA).safetensors,1,In the video,A girl  takes off from the  ground into the air. She  stretches her arms and leaps into the air, creating a graceful ascending motion, causing a sb9527sb flying effect. The girl continues to glide forward through city buildings, further showing the sb9527sb flying effect.

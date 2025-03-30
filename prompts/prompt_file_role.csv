@@ -1,6 +1,7 @@
-1,disable,reserve,girl,yuiri,Wearing a T-shirt,short jeans,
-2,disable,reserve,girl,yuiri,Wearing underwear,short jeans,strong thighs,huge breasts
-3,disable,reserve,girl,yuiri,Bunny girl, white fishnet stockings, black strapless top, wearing bunny ears on her head, fake collar, fake cuffs, high heels
-4,disable,reserve,girl,yuiri,Wearing a T-shirt,short pants, huge sagging breasts,too tight,Thick thighs,wide hips
-5,enable,reserve,girl,yuiri,Bunny girl,black strapless top,wearing bunny ears on her head, fake collar, fake cuffs,short pants, huge sagging breasts,too tight,Thick thighs,wide hips
-6,enable,reserve,girl,yuiri,Bunny girl,black Camisole,Covering the chest,wearing bunny ears on her head, fake collar, fake cuffs,short pants, huge sagging breasts,too tight,Thick thighs,wide hips
+1,enable,0,girl,yuiri,Wearing a T-shirt,short jeans,
+2,enable,1,yuiri_flux_beta3.safetensors,1,girl,yuiri,Wearing underwear,short jeans,strong thighs,huge breasts
+3,disable,1,yuiri_flux_beta3.safetensors,1,girl,yuiri,Bunny girl, white fishnet stockings, black strapless top, wearing bunny ears on her head, fake collar, fake cuffs, high heels
+4,enable,2,yuiri_flux_beta3.safetensors,1,fluxdBreast/ExtraOomphHugeBreasts.safetensors,1,girl,yuiri,Wearing a T-shirt,short pants, huge sagging breasts,too tight,Thick thighs,wide hips
+5,disable,2,yuiri_flux_beta3.safetensors,1,fluxdBreast/ExtraOomphHugeBreasts.safetensors,1,girl,yuiri,Bunny girl,black strapless top,wearing bunny ears on her head, fake collar, fake cuffs,short pants, huge sagging breasts,too tight,Thick thighs,wide hips
+6,disable,0,girl,yuiri,Bunny girl,black Camisole,Covering the chest,wearing bunny ears on her head, fake collar, fake cuffs,short pants, huge sagging breasts,too tight,Thick thighs,wide hips
+7,enable,3,yuiri_flux_beta3.safetensors,1,fluxdBreast/ExtraOomphHugeBreasts.safetensors,1,flux-lo_dress_style1_v1.safetensors,1,girl,yuiri,huge sagging breasts,too tight,wide hips,Thick fat, dress with detached sleeves and bow and ribbon and choker,Short skirt with Show thighs, she is also wearing thighhighs and high heels, hairband and hair ornament

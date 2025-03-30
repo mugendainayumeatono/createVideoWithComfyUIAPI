@@ -37,7 +37,7 @@ def get_history(prompt_id):
 
 def get_images(ws, prompt, client_id):
     logging.info(f"开始生成图片...")
-    prompt.set_workflow_param()
+    prompt.set_workflow_param_every_loop()
     prompt_id = queue_prompt(prompt.prompt_json,client_id)['prompt_id']
     output_images = {}
     while True:
@@ -69,7 +69,7 @@ def get_images(ws, prompt, client_id):
 
 def get_videos(ws, prompt, client_id):
     logging.info(f"开始生成视频...")
-    prompt.set_workflow_param()
+    prompt.set_workflow_param_every_loop()
     prompt_id = queue_prompt(prompt.prompt_json,client_id)['prompt_id']
     output_images = {}
     while True:
@@ -190,22 +190,26 @@ def  create_picture(create_num=10):
     logging.info(f"成功")
 
     create_counter=0
+    obj_workflow.set_workflow_param_init()
     while True:
         create_counter=create_counter+1
         if create_counter>create_num:
             logging.info(f"完成，已创建({create_num}张)")
             break
         try:
-            obj_workflow.set_workflow_prompt_word(next(prompt_words))
+            prompt,selected_loras = next(prompt_words)
+            obj_workflow.set_workflow_PowerLoraLoader(selected_loras)
+            obj_workflow.set_workflow_prompt_word(prompt)
         except StopIteration:
             logging.info("已经没有更多的prompt了,结束程序")
             break
 
         for i in range(config.one_prompt_multi_create):
             images = get_images(ws, obj_workflow, client_id)
-            save_file(images, config.output_folder)
+            save_file(images, config.FLUXD_output_path)
             pass
     ws.close()
+    return create_counter
 
 def create_video_ITV(create_num=10):
     logging.info(f"初始化...")
@@ -228,6 +232,7 @@ def create_video_ITV(create_num=10):
     jpg_files.extend(dir_path.rglob("*.[pP][nN][gG]"))  # 支持 .jpeg
     # 依次处理每个文件
     create_counter=0
+    obj_workflow.set_workflow_param_init()
     for jpg_file in jpg_files:
         create_counter=create_counter+1
         if create_counter>create_num:
@@ -240,18 +245,54 @@ def create_video_ITV(create_num=10):
         obj_workflow.set_workflow_source_image(file_name)
         #生成提示词
         try:
-            obj_workflow.set_workflow_prompt_word(next(prompt_words))
+            prompt,selected_loras = next(prompt_words)
+            obj_workflow.set_workflow_PowerLoraLoader(selected_loras)
+            obj_workflow.set_workflow_prompt_word(prompt)
         except StopIteration:
             logging.info("已经没有更多的prompt了,结束程序")
             break
+        obj_workflow.write_json_file(f"workflow_output_{create_counter}.json")
         for i in range(config.one_prompt_multi_create):
             images = get_videos(ws, obj_workflow,client_id)
             #save_file(images, config.output_folder, "video")
     logging.info(f"完成，已创建({create_counter})")
     ws.close()
 
+
+def  create_from_workflow_direct(type="image",create_num=10):
+    logging.info(f"初始化...")
+    client_id = str(uuid.uuid4())
+    obj_workflow = workflow.workflow(config.direct_workflow)
+    prompt_generator = config.prompt_generator_factory(config.prompt_file_set_picture)
+    prompt_words = prompt_generator()
+
+    logging.info(f"连接服务器...")
+    ws = websocket.WebSocket()
+    ws.connect("ws://{}/ws?clientId={}".format(config.server_address, client_id))
+    logging.info(f"成功")
+
+    create_counter=0
+    while True:
+        create_counter=create_counter+1
+        if create_counter>create_num:
+            logging.info(f"完成，已创建({create_num}张)")
+            break
+
+        for i in range(config.one_prompt_multi_create):
+            if(type == "image"):
+                images = get_images(ws, obj_workflow, client_id)
+                save_file(images, config.FLUXD_output_path)
+            elif(type == "video"):
+                images = get_videos(ws, obj_workflow,client_id)
+            pass
+    ws.close()
+    return create_counter
+
 if __name__ == "__main__":
-    #create_picture(100)
-    create_video_ITV(37)# 每张11分钟，32张大概6小时完成
+    num = 1
+    create_num = 1
+    create_num = create_picture(num)
+    #create_num = create_from_workflow_direct()
+    create_video_ITV(create_num)# 每张11分钟，32张大概6小时完成
 
 

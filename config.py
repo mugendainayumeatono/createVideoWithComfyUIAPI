@@ -6,7 +6,6 @@ import random
 log_level = logging.DEBUG
 #server_address = "js1.blockelite.cn:21667"
 server_address = "127.0.0.1:8803"
-output_folder = "output"
 prompt_file_optimize = r"prompts/prompt_file_optimize.csv"
 prompt_file_backdrop = r"prompts/prompt_file_backdrop.csv"
 prompt_file_role = r"prompts/prompt_file_role.csv"
@@ -14,25 +13,26 @@ prompt_file_pose = r"prompts/prompt_file_pose.csv"
 prompt_file_ITV = r"prompts/prompt_file_ITV.csv"
 one_prompt_multi_create = 1
 
+direct_workflow = r"workflow/FLUXD_direct_workflow.json"
+
 #flux 设定
-FLUXD_workflow = r"workflow/FLUXD_v2_workflow_API.json"
+FLUXD_output_path = "image_output"
+FLUXD_workflow = r"workflow/FLUXD_v4_workflow_API.json"
 prompt_file_set_picture = [prompt_file_optimize, prompt_file_backdrop, prompt_file_role, prompt_file_pose]
 
 #wan-video 设定
-wan_workflow = r"workflow/wanvideo_480p_I2V_API.json"
-wan_intput_image_path = "input"
-#wan_intput_image_path = r"C:\userfile\02_data\AI\resource4_perprocess1_small_200\resource4_perprocess2_small_unifiedsize"
-wan_output_file_name = "I2V_20250320_"
+wan_workflow = r"workflow/Wan-2.1_v1_workflow_API.json"
+wan_intput_image_path = "image_output"
+wan_output_filename = "video_"
 prompt_file_set_video = [prompt_file_ITV]
 
-def process_csv_to_array(file_path, separator=','):
+def process_csv_to_array(file_path):
     """
-    从 CSV 文件逐行读取，将每行第3列之后的列拼接成字符串，组成数组
+    从 CSV 文件逐行读取，返回第三列之后的列
     参数：
         file_path: CSV 文件路径
-        separator: 拼接时的分隔符，默认为逗号
     返回：
-        包含每行拼接结果的数组
+        第三列之后的列
     """
     result_array = []
     
@@ -43,15 +43,15 @@ def process_csv_to_array(file_path, separator=','):
             
             for row_idx, row in enumerate(csv_reader, 1):
                 if len(row) > 2:
-                    concatenated = separator.join(row[3:])
                     if row[1] == "enable":
                         # 拼接第3列（索引2）之后的列
-                        result_array.append(concatenated)
-                        logging.debug(f"第 {row_idx} 行(enable): {concatenated}")
+                        result_array.append(row[2:])
+                        logging.debug(f"第 {row_idx} 行(enable): {row[2:]}")
                     else:
-                        logging.debug(f"第 {row_idx} 行(disable): {concatenated}")
+                        logging.debug(f"第 {row_idx} 行(disable): {row[2:]}")
                 else:
                     # 少于3列时添加空字符串
+                    result_array.append('0')
                     result_array.append('')
                     logging.debug(f"第 {row_idx} 行: 列数不足，添加空字符串")
             
@@ -61,6 +61,43 @@ def process_csv_to_array(file_path, separator=','):
     except Exception as e:
         logging.error(f"读取出错: {e}")
         return []
+
+def split_to_lora_prompt(row):
+    logging.debug(f"分割lora和提示词...")
+    logging.debug(f"row = {row}")
+    try:   
+        # 获取第一列的数字作为字典数量
+        dict_count = int(row[0])
+        
+        # 初始化结果列表存储字典
+        lora_dicts = []
+        
+        # 从第2列开始，每2列创建一个字典
+        # 第2列是index 1，第3列是index 2，以此类推
+        for i in range(dict_count):
+            # 计算列索引：每组2列，从第2列开始
+            path_idx = 1 + i * 2    # lora_path的列
+            strength_idx = 2 + i * 2  # strength的列
+            
+            # 创建字典
+            lora_dict = {
+                "lora_path": row[path_idx],
+                "strength": int(row[strength_idx])
+            }
+            lora_dicts.append(lora_dict)
+        
+        # 获取剩余的列
+        # 从第(1 + dict_count * 2)列开始到最后
+        start_remain_idx = 1 + dict_count * 2
+        remaining_values = row[start_remain_idx:]
+        # 将剩余值用逗号连接成字符串
+        remaining_string = ",".join(remaining_values)
+        logging.debug(f"提示词: {remaining_values} ,lora字典: {lora_dicts}")
+        return lora_dicts, remaining_string
+            
+    except Exception as e:
+        logging.error(f"发生错误: {str(e)}")
+        return [], ""
 
 def prompt_generator_factory(prompt_file_set):
     logging.info(f"读取提示词配置...")
@@ -72,8 +109,6 @@ def prompt_generator_factory(prompt_file_set):
         """
         生成器函数：生成prompt
         """
-        logging.info(f"生成提示词...")
-
         # 检查数组是否为空
         for arr in prompt_arrays:
             i= 1+1
@@ -85,13 +120,20 @@ def prompt_generator_factory(prompt_file_set):
                         logging.warning(f"提示词数组{arr}为空")
 
         while True:
-            # 从每个数组随机取一行
-            selected_lines = [random.choice(arr) for arr in prompt_arrays]
+            logging.info(f"生成提示词和Lora配置...")
+            selected_lines = []
+            selected_loras = []
+            for arr in prompt_arrays:
+                idx = random.choice(range(len(arr)))  # 随机选择索引
+                lora,prompt = split_to_lora_prompt(arr[idx])
+                selected_lines.append(prompt)
+                selected_loras.extend(lora)
     
             # 拼接成字符串
-            result = ','.join(selected_lines)
-            logging.debug(f"生成的提示词: {result}")
-            yield result
+            prompt = ','.join(selected_lines)
+            logging.info(f"生成的提示词: {prompt}")
+            logging.info(f"应加载的lora index: {selected_loras}")
+            yield prompt,selected_loras
     return _prompt_generator
     
     
@@ -119,12 +161,19 @@ def get_jpg_files(directory):
 
 ##unit test
 if __name__ == "__main__":
-    logging.basicConfig(level=log_level, format='%(asctime)s - %(levelname)s - %(message)s')
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s %(filename)s:%(lineno)d - %(message)s')
+
+    print("test process_csv_to_array")
+    prompts = process_csv_to_array(prompt_file_role)
+    print(prompts)
+
+    print("test prompt_generator_factory")
     prompt_generator = prompt_generator_factory(prompt_file_set_video)
     prompt_gen = prompt_generator()
     for i in range(2):
         next(prompt_gen)
 
+    print("test prompt_generator_factory")
     prompt_generator = prompt_generator_factory(prompt_file_set_picture)
     prompt_gen = prompt_generator()
     for i in range(2):
