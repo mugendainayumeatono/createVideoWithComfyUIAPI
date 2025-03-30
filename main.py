@@ -107,9 +107,9 @@ def save_file(images, folder, type="image"):
     current_time = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
     for node_id in images:
         if type=="image":
-            file_path = os.path.join(folder, f"{current_time}.png")
+            file_path = os.path.join(folder, f"{config.FLUXD_output_filename}_{current_time}.png")
         elif type=="video":
-            file_path = os.path.join(folder, f"{current_time}.MP4")
+            file_path = os.path.join(folder, f"{config.wan_output_filename}_{current_time}.MP4")
         else:
             logging.error(f"不支持保存类型{type}")
             return
@@ -289,10 +289,10 @@ def  create_from_workflow_direct(type="image",create_num=10):
     return create_counter
 
 if __name__ == "__main__":
-    num = 1
+    num = 100
     create_num = 1
     create_num = create_picture(num)
     #create_num = create_from_workflow_direct()
-    create_video_ITV(create_num)# 每张11分钟，32张大概6小时完成
+    #create_video_ITV(create_num)# 每张11分钟，32张大概6小时完成
 
 

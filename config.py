@@ -19,6 +19,7 @@ direct_workflow = r"workflow/FLUXD_direct_workflow.json"
 FLUXD_output_path = "image_output"
 FLUXD_workflow = r"workflow/FLUXD_v4_workflow_API.json"
 prompt_file_set_picture = [prompt_file_optimize, prompt_file_backdrop, prompt_file_role, prompt_file_pose]
+FLUXD_output_filename = "image_"
 
 #wan-video 设定
 wan_workflow = r"workflow/Wan-2.1_v1_workflow_API.json"
@@ -82,7 +83,7 @@ def split_to_lora_prompt(row):
             # 创建字典
             lora_dict = {
                 "lora_path": row[path_idx],
-                "strength": int(row[strength_idx])
+                "strength": float(row[strength_idx])
             }
             lora_dicts.append(lora_dict)
         
