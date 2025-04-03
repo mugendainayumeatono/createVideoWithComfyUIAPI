@@ -13,7 +13,9 @@ prompt_file_pose = r"prompts/prompt_file_pose.csv"
 prompt_file_ITV = r"prompts/prompt_file_ITV.csv"
 one_prompt_multi_create = 1
 
-direct_workflow = r"workflow/FLUXD_direct_workflow.json"
+imageMask_workflow = r"workflow/image_mask_API.json"
+imageMask_input_path = r"image_input"
+direct_workflow = r"workflow/image_mask_API.json"
 
 #flux 设定
 FLUXD_output_path = "image_output"

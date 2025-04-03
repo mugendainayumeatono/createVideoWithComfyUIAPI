@@ -142,6 +142,34 @@ def save_file(images, folder, type="image"):
                 out.release()
                 cv2.destroyAllWindows()
 
+def save_multi_file(images, base_folder, filename, type="image"):
+    logging.info(f"保存文件...")
+    folder_dict_list = {}
+    base_path = Path(base_folder)
+    base_folder_dict_list = workflow.workflow_imageMask.folder_dict_list
+    for key,value in base_folder_dict_list.items():
+        folder_dict_list[key] = base_path / value["folder"]
+        try:
+            folder_dict_list[key].mkdir(parents=True, exist_ok=True)
+        except Exception as e:
+            logging.error(f"{e}")
+
+    for node_id in images:
+        if base_folder_dict_list[node_id]["type"] == "images":
+            file_path = os.path.join(folder_dict_list[node_id], f"{node_id}_nomask_{filename}")
+        elif base_folder_dict_list[node_id]["type"] == "mask":
+            file_path = os.path.join(folder_dict_list[node_id], f"{node_id}_{filename}")
+        else:
+            logging.error(f"不支持保存类型{folder_dict_list[node_id]["type"]}")
+            return
+        for image_data in images[node_id]:
+            if type=="image":
+                image = Image.open(io.BytesIO(image_data))
+                image.save(file_path,"PNG")
+                logging.error(f"已保存文件{file_path}")
+                #image.show()
+
+
 def upload_image(input_path, name, image_type="input", overwrite=False):
     """
     Uploads an image to ComfyUI using multipart/form-data encoding.
@@ -288,11 +316,53 @@ def  create_from_workflow_direct(type="image",create_num=10):
     ws.close()
     return create_counter
 
+def  creat_imageMask(create_num=10):
+    logging.info(f"初始化...")
+    client_id = str(uuid.uuid4())
+    obj_workflow = workflow.workflow_imageMask(config.imageMask_workflow)
+
+    logging.info(f"连接服务器...")
+    ws = websocket.WebSocket()
+    ws.connect("ws://{}/ws?clientId={}".format(config.server_address, client_id))
+    logging.info(f"成功")
+
+        #使用服务器上的文件
+    #jpg_files = config.get_jpg_files(config.wan_intput_image_path)
+    #上传本地文件
+    dir_path = Path(config.imageMask_input_path)
+    jpg_files = list(dir_path.rglob("*.[jJ][pP][gG]"))  # 支持大小写
+    jpg_files.extend(dir_path.rglob("*.[jJ][pP][eE][gG]"))  # 支持 .jpeg
+    jpg_files.extend(dir_path.rglob("*.[pP][nN][gG]"))  # 支持 .jpeg
+
+    # 依次处理每个文件
+    create_counter=0
+    for jpg_file in jpg_files:
+        create_counter=create_counter+1
+        if create_counter>create_num:
+            break
+        absolute_path = jpg_file.absolute()
+        file_name = jpg_file.name  # 获取文件名，例如 "image1.jpg"
+        logging.info("上传图片...")
+        upload_image(str(absolute_path), file_name, "input", True)
+        logging.debug(f"{absolute_path}")
+        obj_workflow.set_workflow_source_image(file_name)
+
+        images = get_images(ws, obj_workflow, client_id)
+        save_multi_file(images, config.FLUXD_output_path, file_name, type="image")
+
+    logging.info(f"完成，已创建({create_counter})")
+
+    ws.close()
+    return create_counter
+
+
 if __name__ == "__main__":
     num = 100
-    create_num = 1
-    create_num = create_picture(num)
-    #create_num = create_from_workflow_direct()
+    create_num = 100
+    #create_num = create_picture(num)
+    #create_num = create_from_workflow_direct(create_num = num)
     #create_video_ITV(create_num)# 每张11分钟，32张大概6小时完成
+
+    creat_imageMask(create_num = num)
 
 

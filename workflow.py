@@ -74,15 +74,27 @@ class workflow:
             new_lora = create_lora_config(lora_index, lora["lora_path"], lora["strength"])
             self.prompt_json[nodeNum]["inputs"].update(new_lora)
 
+    def set_workflow_source_image(self,imagePatch):
+        logging.info(f"设置图片源...")
+        nodeNum = self.searchWorkflowNode("LoadImage")
+        if nodeNum is not None:
+            self.prompt_json[nodeNum]["inputs"]["image"] = imagePatch
+            logging.debug(f"use image = {imagePatch}")
+
     # 写入 JSON 文件  
     def write_json_file(self, file_path):
-        try:
-            with open(file_path, 'w', encoding='utf-8') as file:
-                # pretty print 格式化输出，indent=4 是缩进4个空格
-                json.dump(self.prompt_json, file, ensure_ascii=False, indent=4)
-            logging.info(f"成功写入文件：{file_path}")
-        except Exception as e:
-            logging.error(f"写入文件时出错：{e}")
+        # 获取默认的根日志器
+        logger = logging.getLogger()
+        # 获取当前有效的日志等级
+        current_level = logger.getEffectiveLevel()
+        if current_level == logging.DEBUG:
+            try:
+                with open(file_path, 'w', encoding='utf-8') as file:
+                    # pretty print 格式化输出，indent=4 是缩进4个空格
+                    json.dump(self.prompt_json, file, ensure_ascii=False, indent=4)
+                logging.info(f"成功写入文件：{file_path}")
+            except Exception as e:
+                logging.error(f"写入文件时出错：{e}")
 
 
 class workflow_wan(workflow):
@@ -96,13 +108,6 @@ class workflow_wan(workflow):
             self.prompt_json[nodeNum]["inputs"]["text"] = prompt_word
             logging.debug(f"set prompt = {prompt_word}")
 
-    def set_workflow_source_image(self,imagePatch):
-        logging.info(f"设置图片源...")
-        nodeNum = self.searchWorkflowNode("LoadImage")
-        if nodeNum is not None:
-            self.prompt_json[nodeNum]["inputs"]["image"] = imagePatch
-            logging.debug(f"use image = {imagePatch}")
-
     def set_workflow_param_init(self):
         logging.info(f"初始化参数...")
         nodeNum = self.searchWorkflowNode("VHS_VideoCombine")
@@ -110,6 +115,45 @@ class workflow_wan(workflow):
             current_time = datetime.now().strftime("%Y%m%d_%H%M%S")
             self.prompt_json[nodeNum]["inputs"]["filename_prefix"] = f"{config.wan_output_filename}_{current_time}"
             logging.debug(f"set output file name = {config.wan_output_filename}_{current_time}")
+
+
+class workflow_imageMask(workflow):
+
+    folder_dict_list = {
+            "34":
+            {
+                "type": "images",
+                "folder": "face"
+            },
+            "24":
+            {
+                "type": "mask",
+                "folder": "face"
+            },
+            "23":
+            {
+                "type": "images",
+                "folder": "clothing"
+            },
+            "22":
+            {
+                "type": "mask",
+                "folder": "clothing"
+            },
+            "18":
+            {
+                "type": "mask",
+                "folder": "removeBackground"
+            },
+            "16":
+            {
+                "type": "images",
+                "folder": "removeBackground"
+            },
+    }
+    
+    def set_workflow_param_every_loop(self):
+        pass
 
 
 ##unit test

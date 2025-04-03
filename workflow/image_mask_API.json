@@ -1,0 +1,183 @@
+{
+  "13": {
+    "inputs": {
+      "model": "RMBG-2.0",
+      "sensitivity": 1,
+      "process_res": 1024,
+      "mask_blur": 0,
+      "mask_offset": 0,
+      "background": "Alpha",
+      "invert_output": false,
+      "optimize": "default",
+      "refine_foreground": false,
+      "image": [
+        "36",
+        0
+      ]
+    },
+    "class_type": "RMBG",
+    "_meta": {
+      "title": "去除背景 (RMBG)"
+    }
+  },
+  "16": {
+    "inputs": {
+      "images": [
+        "13",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "预览图像"
+    }
+  },
+  "18": {
+    "inputs": {
+      "mask": [
+        "13",
+        1
+      ]
+    },
+    "class_type": "MaskPreview+",
+    "_meta": {
+      "title": "🔧 Mask Preview"
+    }
+  },
+  "19": {
+    "inputs": {
+      "Skin": true,
+      "Nose": true,
+      "Eyeglasses": true,
+      "Left-eye": true,
+      "Right-eye": true,
+      "Left-eyebrow": true,
+      "Right-eyebrow": true,
+      "Left-ear": true,
+      "Right-ear": true,
+      "Mouth": true,
+      "Upper-lip": true,
+      "Lower-lip": true,
+      "Hair": true,
+      "Earring": true,
+      "Neck": true,
+      "process_res": 320,
+      "mask_blur": 0,
+      "mask_offset": 0,
+      "background_color": "Alpha",
+      "invert_output": false,
+      "images": [
+        "36",
+        0
+      ]
+    },
+    "class_type": "FaceSegment",
+    "_meta": {
+      "title": "面部分割 (RMBG)"
+    }
+  },
+  "20": {
+    "inputs": {
+      "Hat": true,
+      "Hair": false,
+      "Face": false,
+      "Sunglasses": false,
+      "Upper-clothes": true,
+      "Skirt": true,
+      "Dress": true,
+      "Belt": true,
+      "Pants": true,
+      "Left-arm": true,
+      "Right-arm": true,
+      "Left-leg": true,
+      "Right-leg": true,
+      "Bag": false,
+      "Scarf": true,
+      "Left-shoe": true,
+      "Right-shoe": true,
+      "Background": false,
+      "process_res": 256,
+      "mask_blur": 0,
+      "mask_offset": 0,
+      "background_color": "Alpha",
+      "invert_output": false,
+      "images": [
+        "36",
+        0
+      ]
+    },
+    "class_type": "ClothesSegment",
+    "_meta": {
+      "title": "衣物分割 (RMBG)"
+    }
+  },
+  "22": {
+    "inputs": {
+      "mask": [
+        "19",
+        1
+      ]
+    },
+    "class_type": "MaskPreview+",
+    "_meta": {
+      "title": "🔧 Mask Preview"
+    }
+  },
+  "23": {
+    "inputs": {
+      "images": [
+        "20",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "预览图像"
+    }
+  },
+  "24": {
+    "inputs": {
+      "mask": [
+        "20",
+        1
+      ]
+    },
+    "class_type": "MaskPreview+",
+    "_meta": {
+      "title": "🔧 Mask Preview"
+    }
+  },
+  "34": {
+    "inputs": {
+      "images": [
+        "19",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "预览图像"
+    }
+  },
+  "36": {
+    "inputs": {
+      "any": [
+        "42",
+        0
+      ]
+    },
+    "class_type": "LayerUtility: AnyRerouter",
+    "_meta": {
+      "title": "LayerUtility: Any Rerouter"
+    }
+  },
+  "42": {
+    "inputs": {
+      "image": "0.jpg"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "加载图像"
+    }
+  }
+}

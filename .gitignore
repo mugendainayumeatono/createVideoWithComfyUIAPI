@@ -2,3 +2,6 @@ __pycache__
 venv
 image_output
 .vscode
+image_input
+*.log
+run.sh
