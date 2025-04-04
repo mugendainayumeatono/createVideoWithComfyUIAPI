@@ -48,7 +48,7 @@ class workflow:
 
     def set_workflow_param_init(self):
         logging.info(f"初始化参数...")
-        pass
+        self.set_workflow_resolution(config.resolution)
     
     def set_workflow_PowerLoraLoader(self, lora_sets):
         count = 0
@@ -80,6 +80,14 @@ class workflow:
         if nodeNum is not None:
             self.prompt_json[nodeNum]["inputs"]["image"] = imagePatch
             logging.debug(f"use image = {imagePatch}")
+
+    def set_workflow_resolution(self, resolution):
+        logging.info(f"设置分辨率...")
+        nodeNum = self.searchWorkflowNode("EmptySD3LatentImage")
+        if nodeNum is not None:
+            self.prompt_json[nodeNum]["inputs"]["width"] = resolution["width"]
+            self.prompt_json[nodeNum]["inputs"]["height"] = resolution["height"]
+            logging.debug(f"set resolution = {resolution}")
 
     # 写入 JSON 文件  
     def write_json_file(self, file_path):

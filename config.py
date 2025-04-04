@@ -4,14 +4,19 @@ import random
 
 # 全局设定
 log_level = logging.DEBUG
-#server_address = "js1.blockelite.cn:21667"
-server_address = "127.0.0.1:8803"
+server_address = "js1.blockelite.cn:21667"
+#server_address = "127.0.0.1:8803"
 prompt_file_optimize = r"prompts/prompt_file_optimize.csv"
 prompt_file_backdrop = r"prompts/prompt_file_backdrop.csv"
 prompt_file_role = r"prompts/prompt_file_role.csv"
 prompt_file_pose = r"prompts/prompt_file_pose.csv"
 prompt_file_ITV = r"prompts/prompt_file_ITV.csv"
 one_prompt_multi_create = 1
+
+resolution = {
+    "width": 640,
+    "height": 480
+}
 
 imageMask_workflow = r"workflow/image_mask_API.json"
 imageMask_input_path = r"image_input"

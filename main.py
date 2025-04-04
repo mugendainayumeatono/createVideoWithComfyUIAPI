@@ -360,10 +360,10 @@ def  creat_imageMask(create_num=10):
 if __name__ == "__main__":
     num = 100
     create_num = 100
-    #create_num = create_picture(num)
+    create_num = create_picture(num)
     #create_num = create_from_workflow_direct(create_num = num)
     #create_video_ITV(create_num)# 每张11分钟，32张大概6小时完成
 
-    creat_imageMask(create_num = num)
+    #creat_imageMask(create_num = num)
 
 
