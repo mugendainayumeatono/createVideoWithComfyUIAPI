@@ -128,7 +128,7 @@ class workflow_imageMask(workflow):
             "24":
             {
                 "type": "mask",
-                "folder": "face"
+                "folder": "clothing"
             },
             "23":
             {
@@ -138,7 +138,7 @@ class workflow_imageMask(workflow):
             "22":
             {
                 "type": "mask",
-                "folder": "clothing"
+                "folder": "face"
             },
             "18":
             {

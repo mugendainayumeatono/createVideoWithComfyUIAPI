@@ -7,5 +7,5 @@
 8,enable,0,Lying in the bathtub
 9,enable,0,Sitting on the edge of the bathtub
 10,enable,0,Standing in the pool
-11,enable,0,lick ice cream cone
-12,enable,0,Lift one leg,Holding a thigh
+11,disable,0,lick ice cream cone
+12,enable,0,Lift one leg,Holding thigh

@@ -147,6 +147,7 @@ def save_multi_file(images, base_folder, filename, type="image"):
     folder_dict_list = {}
     base_path = Path(base_folder)
     base_folder_dict_list = workflow.workflow_imageMask.folder_dict_list
+    name_without_ext = Path(filename).stem
     for key,value in base_folder_dict_list.items():
         folder_dict_list[key] = base_path / value["folder"]
         try:
@@ -156,9 +157,9 @@ def save_multi_file(images, base_folder, filename, type="image"):
 
     for node_id in images:
         if base_folder_dict_list[node_id]["type"] == "images":
-            file_path = os.path.join(folder_dict_list[node_id], f"{node_id}_nomask_{filename}")
+            file_path = os.path.join(folder_dict_list[node_id], f"{name_without_ext}_nomask.png")
         elif base_folder_dict_list[node_id]["type"] == "mask":
-            file_path = os.path.join(folder_dict_list[node_id], f"{node_id}_{filename}")
+            file_path = os.path.join(folder_dict_list[node_id], f"{name_without_ext}.png")
         else:
             logging.error(f"不支持保存类型{folder_dict_list[node_id]["type"]}")
             return
