@@ -291,9 +291,7 @@ def create_video_ITV(create_num=10):
 def  create_from_workflow_direct(type="image",create_num=10):
     logging.info(f"初始化...")
     client_id = str(uuid.uuid4())
-    obj_workflow = workflow.workflow(config.direct_workflow)
-    prompt_generator = config.prompt_generator_factory(config.prompt_file_set_picture)
-    prompt_words = prompt_generator()
+    obj_workflow = workflow.workflow_direct(config.direct_workflow)
 
     logging.info(f"连接服务器...")
     ws = websocket.WebSocket()
@@ -301,19 +299,41 @@ def  create_from_workflow_direct(type="image",create_num=10):
     logging.info(f"成功")
 
     create_counter=0
-    while True:
-        create_counter=create_counter+1
-        if create_counter>create_num:
-            logging.info(f"完成，已创建({create_num}张)")
-            break
+    if(type == "video"):
+        #取得图片列表
+        dir_path = Path(config.wan_intput_image_path)
+        jpg_files = list(dir_path.rglob("*.[jJ][pP][gG]"))  # 支持大小写
+        jpg_files.extend(dir_path.rglob("*.[jJ][pP][eE][gG]"))  # 支持 .jpeg
+        jpg_files.extend(dir_path.rglob("*.[pP][nN][gG]"))  # 支持 .jpeg
 
-        for i in range(config.one_prompt_multi_create):
-            if(type == "image"):
-                images = get_images(ws, obj_workflow, client_id)
-                save_file(images, config.FLUXD_output_path)
-            elif(type == "video"):
-                images = get_videos(ws, obj_workflow,client_id)
-            pass
+        for jpg_file in jpg_files:
+            create_counter=create_counter+1
+            if create_counter>create_num:
+                logging.info(f"完成，已创建({create_num}张)")
+                break
+            absolute_path = jpg_file.absolute()
+            file_name = jpg_file.name  # 获取文件名，例如 "image1.jpg"
+            logging.info("上传图片...")
+            upload_image(str(absolute_path), file_name, "input", True)
+            logging.debug(f"{absolute_path}")
+            obj_workflow.set_workflow_source_image(file_name)
+
+            obj_workflow.write_json_file(f"workflow_output_{create_counter}.json")
+            for i in range(config.one_prompt_multi_create):
+                for i in range(config.one_prompt_multi_create):
+                    images = get_videos(ws, obj_workflow,client_id)
+
+    elif (type == "image"):
+        while True:
+            create_counter=create_counter+1
+            if create_counter>create_num:
+                logging.info(f"完成，已创建({create_num}张)")
+                break
+
+            for i in range(config.one_prompt_multi_create):
+                if(type == "image"):
+                    images = get_images(ws, obj_workflow, client_id)
+                    save_file(images, config.FLUXD_output_path)
     ws.close()
     return create_counter
 
@@ -359,9 +379,9 @@ def  creat_imageMask(create_num=10):
 
 if __name__ == "__main__":
     num = 100
-    create_num = 100
-    create_num = create_picture(num)
-    #create_num = create_from_workflow_direct(create_num = num)
+    create_num = 30
+    #create_num = create_picture(num)
+    create_num = create_from_workflow_direct(type = "video",create_num = num)
     #create_video_ITV(create_num)# 每张11分钟，32张大概6小时完成
 
     #creat_imageMask(create_num = num)

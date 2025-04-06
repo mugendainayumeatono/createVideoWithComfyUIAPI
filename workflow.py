@@ -163,6 +163,9 @@ class workflow_imageMask(workflow):
     def set_workflow_param_every_loop(self):
         pass
 
+class workflow_direct(workflow):
+    def set_workflow_param_every_loop(self):
+        pass
 
 ##unit test
 if __name__ == "__main__":

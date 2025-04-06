@@ -1,0 +1,385 @@
+{
+  "10": {
+    "inputs": {
+      "clip_name": "clip_vision_h.safetensors"
+    },
+    "class_type": "CLIPVisionLoader",
+    "_meta": {
+      "title": "加载CLIP视觉"
+    }
+  },
+  "13": {
+    "inputs": {
+      "text": "色调艳丽，过曝，静态，细节模糊不清，字幕，风格，作品，画作，画面，静止，整体发灰，最差质量，低质量，JPEG压缩残留，丑陋的，残缺的，多余的手指，画得不好的手部，画得不好的脸部，畸形的，毁容的，形态畸形的肢体，手指融合，静止不动的画面，杂乱的背景，三条腿，背景人很多，倒着走",
+      "speak_and_recognation": {
+        "__value__": [
+          false,
+          true
+        ]
+      },
+      "clip": [
+        "112",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP文本编码"
+    }
+  },
+  "14": {
+    "inputs": {
+      "text": "In the video,A girl making dabaichui motion",
+      "speak_and_recognation": {
+        "__value__": [
+          false,
+          true
+        ]
+      },
+      "clip": [
+        "112",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP文本编码"
+    }
+  },
+  "16": {
+    "inputs": {
+      "clip_name": "Comfy-Org/umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+      "type": "wan",
+      "device": "default"
+    },
+    "class_type": "CLIPLoader",
+    "_meta": {
+      "title": "加载CLIP"
+    }
+  },
+  "17": {
+    "inputs": {
+      "vae_name": "Wan2_1_VAE_bf16.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "加载VAE"
+    }
+  },
+  "18": {
+    "inputs": {
+      "samples": [
+        "19",
+        0
+      ],
+      "vae": [
+        "17",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE解码"
+    }
+  },
+  "19": {
+    "inputs": {
+      "seed": 73030745172395,
+      "steps": 20,
+      "cfg": 6,
+      "sampler_name": "uni_pc",
+      "scheduler": "simple",
+      "denoise": 1,
+      "model": [
+        "129",
+        0
+      ],
+      "positive": [
+        "20",
+        0
+      ],
+      "negative": [
+        "20",
+        1
+      ],
+      "latent_image": [
+        "20",
+        2
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "K采样器"
+    }
+  },
+  "20": {
+    "inputs": {
+      "width": 640,
+      "height": 480,
+      "length": 81,
+      "batch_size": 1,
+      "positive": [
+        "14",
+        0
+      ],
+      "negative": [
+        "13",
+        0
+      ],
+      "vae": [
+        "17",
+        0
+      ],
+      "clip_vision_output": [
+        "21",
+        0
+      ],
+      "start_image": [
+        "138",
+        0
+      ]
+    },
+    "class_type": "WanImageToVideo",
+    "_meta": {
+      "title": "Wan图像到视频"
+    }
+  },
+  "21": {
+    "inputs": {
+      "crop": "none",
+      "clip_vision": [
+        "10",
+        0
+      ],
+      "image": [
+        "138",
+        0
+      ]
+    },
+    "class_type": "CLIPVisionEncode",
+    "_meta": {
+      "title": "CLIP视觉编码"
+    }
+  },
+  "63": {
+    "inputs": {
+      "purge_cache": true,
+      "purge_models": true,
+      "anything": [
+        "18",
+        0
+      ]
+    },
+    "class_type": "LayerUtility: PurgeVRAM",
+    "_meta": {
+      "title": "LayerUtility: Purge VRAM"
+    }
+  },
+  "79": {
+    "inputs": {
+      "purge_cache": true,
+      "purge_models": true,
+      "anything": [
+        "85",
+        0
+      ]
+    },
+    "class_type": "LayerUtility: PurgeVRAM",
+    "_meta": {
+      "title": "LayerUtility: Purge VRAM"
+    }
+  },
+  "81": {
+    "inputs": {
+      "frame_rate": 32,
+      "loop_count": 0,
+      "filename_prefix": "training_resource",
+      "format": "video/h264-mp4",
+      "pix_fmt": "yuv420p",
+      "crf": 19,
+      "save_metadata": true,
+      "trim_to_audio": false,
+      "pingpong": false,
+      "save_output": true,
+      "images": [
+        "85",
+        0
+      ]
+    },
+    "class_type": "VHS_VideoCombine",
+    "_meta": {
+      "title": "Video Combine 🎥🅥🅗🅢"
+    }
+  },
+  "82": {
+    "inputs": {
+      "upscale_model": [
+        "83",
+        0
+      ],
+      "image": [
+        "18",
+        0
+      ]
+    },
+    "class_type": "ImageUpscaleWithModel",
+    "_meta": {
+      "title": "使用模型放大图像"
+    }
+  },
+  "83": {
+    "inputs": {
+      "model_name": "RealESRGAN_x4.pth"
+    },
+    "class_type": "UpscaleModelLoader",
+    "_meta": {
+      "title": "加载放大模型"
+    }
+  },
+  "85": {
+    "inputs": {
+      "width": [
+        "86",
+        0
+      ],
+      "height": [
+        "86",
+        1
+      ],
+      "upscale_method": "lanczos",
+      "keep_proportion": false,
+      "divisible_by": 4,
+      "crop": "disabled",
+      "image": [
+        "82",
+        0
+      ]
+    },
+    "class_type": "ImageResizeKJ",
+    "_meta": {
+      "title": "Resize Image"
+    }
+  },
+  "86": {
+    "inputs": {
+      "image": [
+        "18",
+        0
+      ]
+    },
+    "class_type": "Get resolution [Crystools]",
+    "_meta": {
+      "title": "🪛 Get resolution"
+    }
+  },
+  "112": {
+    "inputs": {
+      "PowerLoraLoaderHeaderWidget": {
+        "type": "PowerLoraLoaderHeaderWidget"
+      },
+      "lora_1": {
+        "on": true,
+        "lora": "wan2.1/dbc.safetensors",
+        "strength": 1
+      },
+      "lora_2": {
+        "on": false,
+        "lora": "None",
+        "strength": 0.7
+      },
+      "➕ Add Lora": "",
+      "model": [
+        "136",
+        0
+      ],
+      "clip": [
+        "16",
+        0
+      ]
+    },
+    "class_type": "Power Lora Loader (rgthree)",
+    "_meta": {
+      "title": "Power Lora Loader (rgthree)"
+    }
+  },
+  "129": {
+    "inputs": {
+      "weight": 0.2,
+      "model": [
+        "134",
+        0
+      ],
+      "latent": [
+        "20",
+        2
+      ]
+    },
+    "class_type": "WanVideoEnhanceAVideoKJ",
+    "_meta": {
+      "title": "WanVideo Enhance A Video (native)"
+    }
+  },
+  "130": {
+    "inputs": {
+      "blocks": "9,10",
+      "start_percent": 0.20000000000000004,
+      "end_percent": 0.5000000000000001,
+      "model": [
+        "112",
+        0
+      ]
+    },
+    "class_type": "SkipLayerGuidanceWanVideo",
+    "_meta": {
+      "title": "Skip Layer Guidance WanVideo"
+    }
+  },
+  "134": {
+    "inputs": {
+      "rel_l1_thresh": 0.030000000000000006,
+      "start_percent": 0.2,
+      "end_percent": 1,
+      "cache_device": "offload_device",
+      "coefficients": "disabled",
+      "model": [
+        "130",
+        0
+      ]
+    },
+    "class_type": "WanVideoTeaCacheKJ",
+    "_meta": {
+      "title": "WanVideo Tea Cache (native)"
+    }
+  },
+  "136": {
+    "inputs": {
+      "unet_name": "wan-kijai/Wan2_1-I2V-14B-480P_fp8_e4m3fn.safetensors",
+      "weight_dtype": "fp8_e4m3fn"
+    },
+    "class_type": "UNETLoader",
+    "_meta": {
+      "title": "UNet加载器"
+    }
+  },
+  "137": {
+    "inputs": {
+      "image": "ComfyUI_temp_sckvc_00004_.png"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "加载图像"
+    }
+  },
+  "138": {
+    "inputs": {
+      "any": [
+        "137",
+        0
+      ]
+    },
+    "class_type": "LayerUtility: AnyRerouter",
+    "_meta": {
+      "title": "LayerUtility: Any Rerouter"
+    }
+  }
+}

@@ -4,8 +4,8 @@ import random
 
 # 全局设定
 log_level = logging.DEBUG
-server_address = "js1.blockelite.cn:21667"
-#server_address = "127.0.0.1:8803"
+#server_address = "js1.blockelite.cn:21667"
+server_address = "127.0.0.1:8803"
 prompt_file_optimize = r"prompts/prompt_file_optimize.csv"
 prompt_file_backdrop = r"prompts/prompt_file_backdrop.csv"
 prompt_file_role = r"prompts/prompt_file_role.csv"
@@ -20,7 +20,8 @@ resolution = {
 
 imageMask_workflow = r"workflow/image_mask_API.json"
 imageMask_input_path = r"image_input"
-direct_workflow = r"workflow/image_mask_API.json"
+#direct_workflow = r"workflow/Wan_training_resource_kijai.json"
+direct_workflow = r"workflow/Wan_training_resource_org.json"
 
 #flux 设定
 FLUXD_output_path = "image_output"
