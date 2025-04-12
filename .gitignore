@@ -5,3 +5,4 @@ image_output
 image_input
 *.log
 run.sh
+lanch.sh

@@ -1,11 +1,12 @@
 import csv
 import logging
 import random
+import os
 
 # 全局设定
 log_level = logging.DEBUG
 #server_address = "js1.blockelite.cn:21667"
-server_address = "127.0.0.1:8803"
+server_address = "127.0.0.1:8805"
 prompt_file_optimize = r"prompts/prompt_file_optimize.csv"
 prompt_file_backdrop = r"prompts/prompt_file_backdrop.csv"
 prompt_file_role = r"prompts/prompt_file_role.csv"
@@ -21,7 +22,8 @@ resolution = {
 imageMask_workflow = r"workflow/image_mask_API.json"
 imageMask_input_path = r"image_input"
 #direct_workflow = r"workflow/Wan_training_resource_kijai.json"
-direct_workflow = r"workflow/Wan_training_resource_org.json"
+#direct_workflow = r"workflow/Wan_training_resource_org.json"
+direct_workflow = r"workflow/Wan-2.1_training.json"
 
 #flux 设定
 FLUXD_output_path = "image_output"
@@ -34,6 +36,16 @@ wan_workflow = r"workflow/Wan-2.1_v1_workflow_API.json"
 wan_intput_image_path = "image_output"
 wan_output_filename = "video_"
 prompt_file_set_video = [prompt_file_ITV]
+
+def set_workpath():
+    """
+    设置工作目录
+    """
+    # 获取当前脚本的目录
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+
+    # 设置工作目录为脚本所在目录
+    os.chdir(script_dir)
 
 def process_csv_to_array(file_path):
     """

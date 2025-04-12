@@ -320,8 +320,7 @@ def  create_from_workflow_direct(type="image",create_num=10):
 
             obj_workflow.write_json_file(f"workflow_output_{create_counter}.json")
             for i in range(config.one_prompt_multi_create):
-                for i in range(config.one_prompt_multi_create):
-                    images = get_videos(ws, obj_workflow,client_id)
+                images = get_videos(ws, obj_workflow,client_id)
 
     elif (type == "image"):
         while True:
@@ -378,9 +377,10 @@ def  creat_imageMask(create_num=10):
 
 
 if __name__ == "__main__":
-    num = 100
+    num = 30
     create_num = 30
-    #create_num = create_picture(num)
+    config.set_workpath()
+    create_num = create_picture(num)
     create_num = create_from_workflow_direct(type = "video",create_num = num)
     #create_video_ITV(create_num)# 每张11分钟，32张大概6小时完成
 

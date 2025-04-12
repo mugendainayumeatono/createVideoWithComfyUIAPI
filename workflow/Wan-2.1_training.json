@@ -11,14 +11,8 @@
   "13": {
     "inputs": {
       "text": "色调艳丽，过曝，静态，细节模糊不清，字幕，风格，作品，画作，画面，静止，整体发灰，最差质量，低质量，JPEG压缩残留，丑陋的，残缺的，多余的手指，画得不好的手部，画得不好的脸部，畸形的，毁容的，形态畸形的肢体，手指融合，静止不动的画面，杂乱的背景，三条腿，背景人很多，倒着走",
-      "speak_and_recognation": {
-        "__value__": [
-          false,
-          true
-        ]
-      },
       "clip": [
-        "112",
+        "138",
         1
       ]
     },
@@ -29,15 +23,9 @@
   },
   "14": {
     "inputs": {
-      "text": "In the video,A girl making dabaichui motion",
-      "speak_and_recognation": {
-        "__value__": [
-          false,
-          true
-        ]
-      },
+      "text": "In the video,A girl  takes off from the  ground into the air. She  stretches her arms and leaps into the air, creating a graceful ascending motion, causing a sb9527sb flying effect. The girl continues to glide forward through city buildings, further showing the sb9527sb flying effect.",
       "clip": [
-        "112",
+        "138",
         1
       ]
     },
@@ -84,7 +72,7 @@
   },
   "19": {
     "inputs": {
-      "seed": 73030745172395,
+      "seed": 11640753378495,
       "steps": 20,
       "cfg": 6,
       "sampler_name": "uni_pc",
@@ -135,7 +123,7 @@
         0
       ],
       "start_image": [
-        "138",
+        "137",
         0
       ]
     },
@@ -152,13 +140,63 @@
         0
       ],
       "image": [
-        "138",
+        "137",
         0
       ]
     },
     "class_type": "CLIPVisionEncode",
     "_meta": {
       "title": "CLIP视觉编码"
+    }
+  },
+  "50": {
+    "inputs": {
+      "ds_factor": 1,
+      "interpolation_factor": 2,
+      "seed": 0,
+      "output_flows": false,
+      "gimmvfi_model": [
+        "53",
+        0
+      ],
+      "images": [
+        "85",
+        0
+      ]
+    },
+    "class_type": "GIMMVFI_interpolate",
+    "_meta": {
+      "title": "GIMM-VFI Interpolate"
+    }
+  },
+  "52": {
+    "inputs": {
+      "frame_rate": 32,
+      "loop_count": 0,
+      "filename_prefix": "wan2.1 Prores",
+      "format": "video/ProRes",
+      "profile": "4",
+      "pingpong": false,
+      "save_output": true,
+      "images": [
+        "50",
+        0
+      ]
+    },
+    "class_type": "VHS_VideoCombine",
+    "_meta": {
+      "title": "Video Combine 🎥🅥🅗🅢"
+    }
+  },
+  "53": {
+    "inputs": {
+      "model": "gimmvfi_r_arb_lpips_fp32.safetensors",
+      "precision": "fp32",
+      "torch_compile": false
+    },
+    "class_type": "DownloadAndLoadGIMMVFIModel",
+    "_meta": {
+      "title": "(Down)Load GIMMVFI Model"
     }
   },
   "63": {
@@ -193,7 +231,7 @@
     "inputs": {
       "frame_rate": 32,
       "loop_count": 0,
-      "filename_prefix": "training_resource",
+      "filename_prefix": "wan2.1_trainingResource",
       "format": "video/h264-mp4",
       "pix_fmt": "yuv420p",
       "crf": 19,
@@ -202,7 +240,7 @@
       "pingpong": false,
       "save_output": true,
       "images": [
-        "85",
+        "50",
         0
       ]
     },
@@ -229,7 +267,7 @@
   },
   "83": {
     "inputs": {
-      "model_name": "RealESRGAN_x4.pth"
+      "model_name": "OmniSR_X2_DIV2K.safetensors"
     },
     "class_type": "UpscaleModelLoader",
     "_meta": {
@@ -248,7 +286,7 @@
       ],
       "upscale_method": "lanczos",
       "keep_proportion": false,
-      "divisible_by": 4,
+      "divisible_by": 2,
       "crop": "disabled",
       "image": [
         "82",
@@ -272,34 +310,18 @@
       "title": "🪛 Get resolution"
     }
   },
-  "112": {
+  "87": {
     "inputs": {
-      "PowerLoraLoaderHeaderWidget": {
-        "type": "PowerLoraLoaderHeaderWidget"
-      },
-      "lora_1": {
-        "on": true,
-        "lora": "wan2.1/dbc.safetensors",
-        "strength": 1
-      },
-      "lora_2": {
-        "on": false,
-        "lora": "None",
-        "strength": 0.7
-      },
-      "➕ Add Lora": "",
-      "model": [
-        "136",
-        0
-      ],
-      "clip": [
-        "16",
+      "purge_cache": true,
+      "purge_models": true,
+      "anything": [
+        "50",
         0
       ]
     },
-    "class_type": "Power Lora Loader (rgthree)",
+    "class_type": "LayerUtility: PurgeVRAM",
     "_meta": {
-      "title": "Power Lora Loader (rgthree)"
+      "title": "LayerUtility: Purge VRAM"
     }
   },
   "129": {
@@ -325,7 +347,7 @@
       "start_percent": 0.20000000000000004,
       "end_percent": 0.5000000000000001,
       "model": [
-        "112",
+        "138",
         0
       ]
     },
@@ -363,7 +385,7 @@
   },
   "137": {
     "inputs": {
-      "image": "ComfyUI_temp_sckvc_00004_.png"
+      "image": "image_1.jpg"
     },
     "class_type": "LoadImage",
     "_meta": {
@@ -372,14 +394,22 @@
   },
   "138": {
     "inputs": {
-      "any": [
-        "137",
+      "PowerLoraLoaderHeaderWidget": {
+        "type": "PowerLoraLoaderHeaderWidget"
+      },
+      "➕ Add Lora": "",
+      "model": [
+        "136",
+        0
+      ],
+      "clip": [
+        "16",
         0
       ]
     },
-    "class_type": "LayerUtility: AnyRerouter",
+    "class_type": "Power Lora Loader (rgthree)",
     "_meta": {
-      "title": "LayerUtility: Any Rerouter"
+      "title": "Power Lora Loader (rgthree)"
     }
   }
 }
