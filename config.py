@@ -5,8 +5,11 @@ import os
 
 # 全局设定
 log_level = logging.DEBUG
-#server_address = "js1.blockelite.cn:21667"
-server_address = "127.0.0.1:8805"
+server_address_remote = "js1.blockelite.cn:21667"
+server_address_remote_other = "js1.blockelite.cn:21669"
+server_address_local = "127.0.0.1:8803"
+server_address_local_other = "127.0.0.1:8805"
+server_address = server_address_local
 prompt_file_optimize = r"prompts/prompt_file_optimize.csv"
 prompt_file_backdrop = r"prompts/prompt_file_backdrop.csv"
 prompt_file_role = r"prompts/prompt_file_role.csv"

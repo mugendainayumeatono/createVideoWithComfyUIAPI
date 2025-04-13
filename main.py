@@ -15,6 +15,7 @@ from pathlib import Path
 import os
 from datetime import datetime
 from requests_toolbelt import MultipartEncoder
+import argparse
 
 import config
 import workflow
@@ -167,7 +168,7 @@ def save_multi_file(images, base_folder, filename, type="image"):
             if type=="image":
                 image = Image.open(io.BytesIO(image_data))
                 image.save(file_path,"PNG")
-                logging.error(f"已保存文件{file_path}")
+                logging.info(f"已保存文件{file_path}")
                 #image.show()
 
 
@@ -378,10 +379,55 @@ def  creat_imageMask(create_num=10):
 
 if __name__ == "__main__":
     num = 30
-    create_num = 30
+    create_num = 5
     config.set_workpath()
-    create_num = create_picture(num)
-    create_num = create_from_workflow_direct(type = "video",create_num = num)
+
+    parser = argparse.ArgumentParser(description="ComfyUI WebSocket Client")
+    parser.add_argument("--mask", action="store_true", help="create mask")
+    parser.add_argument("--picture", action="store_true", help="create picture only")
+    parser.add_argument("--video", action="store_true", help="create video only")
+    parser.add_argument("--all", action="store_true", help="create picture first then create video from picture")
+    parser.add_argument("--direct", action="store_true", help="use workflow direct")
+    parser.add_argument("-n", "--num", help="creat num", type=int)
+    parser.add_argument("--server", help="what server will be used", type=str)
+
+    args = parser.parse_args()
+    if args.num:
+        num = args.num
+
+    if args.server:
+        if args.server == "local":
+            config.server_address = config.server_address_local
+        elif args.server == "local_other":
+            config.server_address = config.server_address_local_other
+        elif args.server == "remote":
+            config.server_address = config.server_address_remote
+        elif args.server == "remote_other":
+            config.server_address = config.server_address_remote_other
+        else:
+            config.server_address = config.server_address_local_other
+
+    if args.mask:
+        logging.info("创建mask")
+        creat_imageMask(create_num = num)
+    elif args.picture:
+        logging.info("创建图片")
+        create_num = create_picture(num)
+    elif args.video:
+        logging.info("创建视频")
+        create_num = create_video_ITV(num)
+    elif args.all:
+        logging.info("创建图片")
+        create_num = create_picture(num)
+        logging.info("创建视频")
+        create_video_ITV(create_num)
+    elif args.direct:
+        logging.info("direct")
+        create_num = create_from_workflow_direct(type = "video",create_num = num)
+    else:
+        parser.print_help()
+
+    #create_num = create_picture(num)
     #create_video_ITV(create_num)# 每张11分钟，32张大概6小时完成
 
     #creat_imageMask(create_num = num)

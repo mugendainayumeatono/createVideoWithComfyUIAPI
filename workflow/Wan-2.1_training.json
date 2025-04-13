@@ -72,7 +72,7 @@
   },
   "19": {
     "inputs": {
-      "seed": 11640753378495,
+      "seed": 687235989808067,
       "steps": 20,
       "cfg": 6,
       "sampler_name": "uni_pc",
@@ -104,7 +104,7 @@
     "inputs": {
       "width": 640,
       "height": 480,
-      "length": 81,
+      "length": 49,
       "batch_size": 1,
       "positive": [
         "14",
@@ -149,76 +149,12 @@
       "title": "CLIP视觉编码"
     }
   },
-  "50": {
-    "inputs": {
-      "ds_factor": 1,
-      "interpolation_factor": 2,
-      "seed": 0,
-      "output_flows": false,
-      "gimmvfi_model": [
-        "53",
-        0
-      ],
-      "images": [
-        "85",
-        0
-      ]
-    },
-    "class_type": "GIMMVFI_interpolate",
-    "_meta": {
-      "title": "GIMM-VFI Interpolate"
-    }
-  },
-  "52": {
-    "inputs": {
-      "frame_rate": 32,
-      "loop_count": 0,
-      "filename_prefix": "wan2.1 Prores",
-      "format": "video/ProRes",
-      "profile": "4",
-      "pingpong": false,
-      "save_output": true,
-      "images": [
-        "50",
-        0
-      ]
-    },
-    "class_type": "VHS_VideoCombine",
-    "_meta": {
-      "title": "Video Combine 🎥🅥🅗🅢"
-    }
-  },
-  "53": {
-    "inputs": {
-      "model": "gimmvfi_r_arb_lpips_fp32.safetensors",
-      "precision": "fp32",
-      "torch_compile": false
-    },
-    "class_type": "DownloadAndLoadGIMMVFIModel",
-    "_meta": {
-      "title": "(Down)Load GIMMVFI Model"
-    }
-  },
-  "63": {
-    "inputs": {
-      "purge_cache": true,
-      "purge_models": true,
-      "anything": [
-        "18",
-        0
-      ]
-    },
-    "class_type": "LayerUtility: PurgeVRAM",
-    "_meta": {
-      "title": "LayerUtility: Purge VRAM"
-    }
-  },
   "79": {
     "inputs": {
       "purge_cache": true,
       "purge_models": true,
       "anything": [
-        "85",
+        "18",
         0
       ]
     },
@@ -229,7 +165,7 @@
   },
   "81": {
     "inputs": {
-      "frame_rate": 32,
+      "frame_rate": 8,
       "loop_count": 0,
       "filename_prefix": "wan2.1_trainingResource",
       "format": "video/h264-mp4",
@@ -240,88 +176,13 @@
       "pingpong": false,
       "save_output": true,
       "images": [
-        "50",
+        "18",
         0
       ]
     },
     "class_type": "VHS_VideoCombine",
     "_meta": {
       "title": "Video Combine 🎥🅥🅗🅢"
-    }
-  },
-  "82": {
-    "inputs": {
-      "upscale_model": [
-        "83",
-        0
-      ],
-      "image": [
-        "18",
-        0
-      ]
-    },
-    "class_type": "ImageUpscaleWithModel",
-    "_meta": {
-      "title": "使用模型放大图像"
-    }
-  },
-  "83": {
-    "inputs": {
-      "model_name": "OmniSR_X2_DIV2K.safetensors"
-    },
-    "class_type": "UpscaleModelLoader",
-    "_meta": {
-      "title": "加载放大模型"
-    }
-  },
-  "85": {
-    "inputs": {
-      "width": [
-        "86",
-        0
-      ],
-      "height": [
-        "86",
-        1
-      ],
-      "upscale_method": "lanczos",
-      "keep_proportion": false,
-      "divisible_by": 2,
-      "crop": "disabled",
-      "image": [
-        "82",
-        0
-      ]
-    },
-    "class_type": "ImageResizeKJ",
-    "_meta": {
-      "title": "Resize Image"
-    }
-  },
-  "86": {
-    "inputs": {
-      "image": [
-        "18",
-        0
-      ]
-    },
-    "class_type": "Get resolution [Crystools]",
-    "_meta": {
-      "title": "🪛 Get resolution"
-    }
-  },
-  "87": {
-    "inputs": {
-      "purge_cache": true,
-      "purge_models": true,
-      "anything": [
-        "50",
-        0
-      ]
-    },
-    "class_type": "LayerUtility: PurgeVRAM",
-    "_meta": {
-      "title": "LayerUtility: Purge VRAM"
     }
   },
   "129": {
