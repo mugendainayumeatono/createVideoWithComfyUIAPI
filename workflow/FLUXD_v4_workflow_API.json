@@ -10,9 +10,15 @@
   },
   "6": {
     "inputs": {
-      "text": "masterpiece, best quality, realistic, photo, bust, real,A girl with ,too tight,wide hips, She wears a snug high-neck crop top, fabric that hugs her toned torso and exposes her defined midriff. Her outfit is completed with tight, high-waisted yoga pants, hugging her thick, plump legs tightly, accentuating their rounded shape while providing support and a streamlined silhouette.",
+      "text": "masterpiece, best quality, realistic, photo, bust, real,girl full body photo,Wear a hanfu_1 and Wearing cloth,Lift one leg,Holding thigh",
+      "speak_and_recognation": {
+        "__value__": [
+          false,
+          true
+        ]
+      },
       "clip": [
-        "316",
+        "324",
         1
       ]
     },
@@ -37,10 +43,21 @@
       "title": "VAE解码"
     }
   },
+  "11": {
+    "inputs": {
+      "clip_name1": "CLIP_sd3/clip_g.safetensors",
+      "clip_name2": "CLIP_sd3/clip_l.safetensors",
+      "clip_name3": "CLIP_sd3/t5xxl_fp8_e4m3fn.safetensors"
+    },
+    "class_type": "TripleCLIPLoader",
+    "_meta": {
+      "title": "三重CLIP加载器"
+    }
+  },
   "50": {
     "inputs": {
       "images": [
-        "8",
+        "322",
         0
       ]
     },
@@ -108,8 +125,14 @@
   "71": {
     "inputs": {
       "text": "lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry, bad feet,breasts Cleavage",
+      "speak_and_recognation": {
+        "__value__": [
+          false,
+          true
+        ]
+      },
       "clip": [
-        "316",
+        "324",
         1
       ]
     },
@@ -120,8 +143,8 @@
   },
   "135": {
     "inputs": {
-      "width": 480,
-      "height": 720,
+      "width": 720,
+      "height": 1088,
       "batch_size": 1
     },
     "class_type": "EmptySD3LatentImage",
@@ -131,14 +154,14 @@
   },
   "294": {
     "inputs": {
-      "seed": 1000137862771775,
+      "seed": 956345384964100,
       "steps": 30,
       "cfg": 4,
       "sampler_name": "euler",
       "scheduler": "normal",
       "denoise": 1,
       "model": [
-        "316",
+        "324",
         0
       ],
       "positive": [
@@ -159,7 +182,95 @@
       "title": "K采样器"
     }
   },
-  "316": {
+  "318": {
+    "inputs": {
+      "model_name": "OmniSR_X2_DIV2K.safetensors"
+    },
+    "class_type": "UpscaleModelLoader",
+    "_meta": {
+      "title": "加载放大模型"
+    }
+  },
+  "319": {
+    "inputs": {
+      "upscale_model": [
+        "318",
+        0
+      ],
+      "image": [
+        "8",
+        0
+      ]
+    },
+    "class_type": "ImageUpscaleWithModel",
+    "_meta": {
+      "title": "使用模型放大图像"
+    }
+  },
+  "320": {
+    "inputs": {
+      "width": [
+        "323",
+        0
+      ],
+      "height": [
+        "323",
+        1
+      ],
+      "upscale_method": "lanczos",
+      "keep_proportion": false,
+      "divisible_by": 2,
+      "crop": "disabled",
+      "image": [
+        "319",
+        0
+      ]
+    },
+    "class_type": "ImageResizeKJ",
+    "_meta": {
+      "title": "Resize Image"
+    }
+  },
+  "321": {
+    "inputs": {
+      "model_name": "GFPGANv1.3.pth"
+    },
+    "class_type": "FaceRestoreModelLoader",
+    "_meta": {
+      "title": "FaceRestoreModelLoader"
+    }
+  },
+  "322": {
+    "inputs": {
+      "facedetection": "retinaface_resnet50",
+      "codeformer_fidelity": 0.5,
+      "facerestore_model": [
+        "321",
+        0
+      ],
+      "image": [
+        "320",
+        0
+      ]
+    },
+    "class_type": "FaceRestoreCFWithModel",
+    "_meta": {
+      "title": "FaceRestoreCFWithModel"
+    }
+  },
+  "323": {
+    "inputs": {
+      "image": [
+        "8",
+        0
+      ]
+    },
+    "class_type": "Get resolution [Crystools]",
+    "_meta": {
+      "title": "🪛 Get resolution"
+    }
+  },
+  "324": {
     "inputs": {
       "PowerLoraLoaderHeaderWidget": {
         "type": "PowerLoraLoaderHeaderWidget"
@@ -170,8 +281,8 @@
         0
       ],
       "clip": [
-        "4",
-        1
+        "11",
+        0
       ]
     },
     "class_type": "Power Lora Loader (rgthree)",

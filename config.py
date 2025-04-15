@@ -35,7 +35,7 @@ prompt_file_set_picture = [prompt_file_optimize, prompt_file_backdrop, prompt_fi
 FLUXD_output_filename = "image_"
 
 #wan-video 设定
-wan_workflow = r"workflow/Wan-2.1_v1_workflow_API.json"
+wan_workflow = r"workflow/Wan-2.1_720x1280_v2.json"
 wan_intput_image_path = "image_output"
 wan_output_filename = "video_"
 prompt_file_set_video = [prompt_file_ITV]
