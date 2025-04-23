@@ -18,8 +18,8 @@ prompt_file_ITV = r"prompts/prompt_file_ITV.csv"
 one_prompt_multi_create = 1
 
 resolution = {
-    "width": 640,
-    "height": 480
+    "width": 720,
+    "height": 1280
 }
 
 imageMask_workflow = r"workflow/image_mask_API.json"
@@ -35,7 +35,7 @@ prompt_file_set_picture = [prompt_file_optimize, prompt_file_backdrop, prompt_fi
 FLUXD_output_filename = "image_"
 
 #wan-video 设定
-wan_workflow = r"workflow/Wan-2.1_720x1280_v2.json"
+wan_workflow = r"workflow/Wan-2.1_720x1280_v2_API.json"
 wan_intput_image_path = "image_output"
 wan_output_filename = "video_"
 prompt_file_set_video = [prompt_file_ITV]

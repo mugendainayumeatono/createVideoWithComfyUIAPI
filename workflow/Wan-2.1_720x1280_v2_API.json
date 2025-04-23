@@ -12,7 +12,7 @@
     "inputs": {
       "text": "色调艳丽，过曝，静态，细节模糊不清，字幕，风格，作品，画作，画面，静止，整体发灰，最差质量，低质量，JPEG压缩残留，丑陋的，残缺的，多余的手指，画得不好的手部，画得不好的脸部，畸形的，毁容的，形态畸形的肢体，手指融合，静止不动的画面，杂乱的背景，三条腿，背景人很多，倒着走",
       "clip": [
-        "112",
+        "138",
         1
       ]
     },
@@ -25,7 +25,7 @@
     "inputs": {
       "text": "stunningly beautiful East Asian movie star, gracefully posing for the camera,exudes confidence and charisma, her eyes sparkling with captivating allure,The camera slowly pans around her, capturing every angle and detail, highlighting her flawless makeup and stylish hairstyle,shallow depth of field creating a dreamy bokeh effect in the background,Further details for video generation,Camera movement, Pace, Music, Lighting, Color grading,sophisticated, glamorous, and effortlessly chic",
       "clip": [
-        "112",
+        "138",
         1
       ]
     },
@@ -169,25 +169,6 @@
       "title": "GIMM-VFI Interpolate"
     }
   },
-  "52": {
-    "inputs": {
-      "frame_rate": 32,
-      "loop_count": 0,
-      "filename_prefix": "wan2.1 Prores",
-      "format": "video/ProRes",
-      "profile": "4",
-      "pingpong": false,
-      "save_output": true,
-      "images": [
-        "50",
-        0
-      ]
-    },
-    "class_type": "VHS_VideoCombine",
-    "_meta": {
-      "title": "Video Combine 🎥🅥🅗🅢"
-    }
-  },
   "53": {
     "inputs": {
       "model": "gimmvfi_r_arb_lpips_fp32.safetensors",
@@ -229,9 +210,9 @@
   },
   "81": {
     "inputs": {
-      "frame_rate": 32,
+      "frame_rate": 30,
       "loop_count": 0,
-      "filename_prefix": "forLoraTraing",
+      "filename_prefix": "wan2.1",
       "format": "video/h264-mp4",
       "pix_fmt": "yuv420p",
       "crf": 19,
@@ -267,7 +248,7 @@
   },
   "83": {
     "inputs": {
-      "model_name": "OmniSR_X2_DIV2K.safetensors"
+      "model_name": "RealESRGAN_x4.pth"
     },
     "class_type": "UpscaleModelLoader",
     "_meta": {
@@ -324,36 +305,6 @@
       "title": "LayerUtility: Purge VRAM"
     }
   },
-  "112": {
-    "inputs": {
-      "PowerLoraLoaderHeaderWidget": {
-        "type": "PowerLoraLoaderHeaderWidget"
-      },
-      "lora_1": {
-        "on": false,
-        "lora": "None",
-        "strength": 0.7
-      },
-      "lora_2": {
-        "on": false,
-        "lora": "None",
-        "strength": 0.7
-      },
-      "➕ Add Lora": "",
-      "model": [
-        "136",
-        0
-      ],
-      "clip": [
-        "16",
-        0
-      ]
-    },
-    "class_type": "Power Lora Loader (rgthree)",
-    "_meta": {
-      "title": "Power Lora Loader (rgthree)"
-    }
-  },
   "129": {
     "inputs": {
       "weight": 0.2,
@@ -377,7 +328,7 @@
       "start_percent": 0.20000000000000004,
       "end_percent": 0.5000000000000001,
       "model": [
-        "112",
+        "138",
         0
       ]
     },
@@ -420,6 +371,26 @@
     "class_type": "LoadImage",
     "_meta": {
       "title": "加载图像"
+    }
+  },
+  "138": {
+    "inputs": {
+      "PowerLoraLoaderHeaderWidget": {
+        "type": "PowerLoraLoaderHeaderWidget"
+      },
+      "➕ Add Lora": "",
+      "model": [
+        "136",
+        0
+      ],
+      "clip": [
+        "16",
+        0
+      ]
+    },
+    "class_type": "Power Lora Loader (rgthree)",
+    "_meta": {
+      "title": "Power Lora Loader (rgthree)"
     }
   }
 }
