@@ -9,8 +9,8 @@
 10,disable,0,Standing in the pool
 11,disable,0,lick ice cream cone
 12,disable,0,Lift one leg,Holding thigh
-10,enable,0,carry a palace lamp
-10,enable,0,hold a lithe kerchief with traditional pattern
+10,disable,0,carry a palace lamp
+10,disable,0,hold a lithe kerchief with traditional pattern
 10,enable,0,hold a circular bronze mirror
 10,disable,0,holding a violin
 10,enable,0,carry a bamboo basket on arm
