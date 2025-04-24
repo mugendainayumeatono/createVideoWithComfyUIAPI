@@ -378,7 +378,7 @@ def  creat_imageMask(create_num=10):
 
 
 if __name__ == "__main__":
-    num = 30
+    num = 1000
     create_num = 5
     config.set_workpath()
 
