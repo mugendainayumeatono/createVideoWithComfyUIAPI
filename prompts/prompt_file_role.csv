@@ -9,4 +9,5 @@
 没指定衣服颜色,disable,2,yami_beta3_mask.safetensors,0.79,fluxdBreast/ExtraOomphHugeBreasts.safetensors,0.6,girl,yuiri,huge sagging breasts,too tight,wide hips,fat and very long legs,Wear a tight T-shirt on top and shorts that reach mid-thigh showing her fat thighs,
 hanfu,disable,2,yami_beta3_mask.safetensors,0.69,hanfu_1.safetensors,0.6,girl full body photo,wear a hanfu_1 and wear cloth shoes,
 hanfu,disable,2,yami_beta3_mask.safetensors,0.69,hanfu_1.safetensors,0.6,girl full body photo,wear a hanfu_1,
-hanfu,enable,3,yami_beta3_mask.safetensors,0.69,hanfu_1.safetensors,0.6,fluxdBreast/skinny_bigBreasts.safetensors,0.9,girl full body photo,wear a hanfu_1,
+hanfu,disable,3,yami_beta3_mask.safetensors,0.69,hanfu_1.safetensors,0.6,fluxdBreast/skinny_bigBreasts.safetensors,0.9,girl full body photo,wear a hanfu_1,
+hanfu,enable,3,yami_beta3_mask.safetensors,0.70,mamianqun_1.safetensors,0.55,fluxdBreast/skinny_bigBreasts.safetensors,0.9,girl full body photo,yami,Wear a mamianqun_1,huge breasts, very long legs

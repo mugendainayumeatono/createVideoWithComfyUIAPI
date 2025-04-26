@@ -30,7 +30,7 @@ direct_workflow = r"workflow/Wan-2.1_training.json"
 
 #flux 设定
 FLUXD_output_path = "image_output"
-FLUXD_workflow = r"workflow/FLUXD_v4_workflow_API.json"
+FLUXD_workflow = r"workflow/FLUXD_v5_workflow_API.json"
 prompt_file_set_picture = [prompt_file_optimize, prompt_file_backdrop, prompt_file_role, prompt_file_pose]
 FLUXD_output_filename = "image_"
 

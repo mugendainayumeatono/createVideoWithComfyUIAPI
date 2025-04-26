@@ -96,7 +96,7 @@
       "Left-shoe": true,
       "Right-shoe": true,
       "Background": false,
-      "process_res": 256,
+      "process_res": 620,
       "mask_blur": 0,
       "mask_offset": 0,
       "background_color": "Alpha",
