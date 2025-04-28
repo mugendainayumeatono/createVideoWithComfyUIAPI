@@ -109,7 +109,6 @@ class workflow_wan(workflow):
     def set_workflow_prompt_word(self,prompt_word):
         logging.info(f"设置提示词...")
         
-        logging.info(f"设置提示词")
         nodeNum = self.searchWorkflowNode("CLIPTextEncode")
         nodeNum = "14" ## 暂时用hardcode
         if nodeNum is not None:

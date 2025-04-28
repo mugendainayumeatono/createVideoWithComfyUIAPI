@@ -74,10 +74,8 @@ def process_csv_to_array(file_path):
                     else:
                         logging.debug(f"第 {row_idx} 行(disable): {row[2:]}")
                 else:
-                    # 少于3列时添加空字符串
-                    result_array.append('0')
-                    result_array.append('')
-                    logging.debug(f"第 {row_idx} 行: 列数不足，添加空字符串")
+                    # 少于3列时，跳过该行
+                    logging.error(f"第 {row_idx} 行: 数据错误，列数不足，跳过该行")
             
             logging.debug(f"读取完成，共处理 {len(result_array)} 行")
             return result_array
@@ -185,7 +183,7 @@ def get_jpg_files(directory):
 
 ##unit test
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s %(filename)s:%(lineno)d - %(message)s')
+    logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s %(filename)s:%(lineno)d - %(message)s')
 
     print("test process_csv_to_array")
     prompts = process_csv_to_array(prompt_file_role)
