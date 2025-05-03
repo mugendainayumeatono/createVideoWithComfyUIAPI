@@ -426,10 +426,3 @@ if __name__ == "__main__":
         create_num = create_from_workflow_direct(type = "video",create_num = num)
     else:
         parser.print_help()
-
-    #create_num = create_picture(num)
-    #create_video_ITV(create_num)# 每张11分钟，32张大概6小时完成
-
-    #creat_imageMask(create_num = num)
-
-

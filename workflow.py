@@ -117,11 +117,21 @@ class workflow_wan(workflow):
 
     def set_workflow_param_init(self):
         logging.info(f"初始化参数...")
+        self.set_workflow_resolution(config.resolution)
+        
         nodeNum = self.searchWorkflowNode("VHS_VideoCombine")
         if nodeNum is not None:
             current_time = datetime.now().strftime("%Y%m%d_%H%M%S")
             self.prompt_json[nodeNum]["inputs"]["filename_prefix"] = f"{config.wan_output_filename}_{current_time}"
             logging.debug(f"set output file name = {config.wan_output_filename}_{current_time}")
+        
+    def set_workflow_resolution(self, resolution):
+        logging.info(f"设置分辨率...")
+        nodeNum = self.searchWorkflowNode("WanImageToVideo")
+        if nodeNum is not None:
+            self.prompt_json[nodeNum]["inputs"]["width"] = resolution["width"]
+            self.prompt_json[nodeNum]["inputs"]["height"] = resolution["height"]
+            logging.debug(f"set resolution = {resolution}")
 
 
 class workflow_imageMask(workflow):
