@@ -319,7 +319,7 @@ def  create_from_workflow_direct(type="image",create_num=10):
             logging.debug(f"{absolute_path}")
             obj_workflow.set_workflow_source_image(file_name)
 
-            obj_workflow.write_json_file(f"workflow_output_{create_counter}.json")
+            #obj_workflow.write_json_file(f"workflow_output_{create_counter}.json")
             for i in range(config.one_prompt_multi_create):
                 images = get_videos(ws, obj_workflow,client_id)
 
