@@ -207,11 +207,14 @@ def upload_image(input_path, name, image_type="input", overwrite=False):
         with urllib.request.urlopen(request) as response:
             return response.read()
 
-def  create_picture(create_num=10):
+def  create_picture(create_num=10, prompt_generator="random"):
     logging.info(f"初始化...")
     client_id = str(uuid.uuid4())
     obj_workflow = workflow.workflow(config.FLUXD_workflow)
-    prompt_generator = config.prompt_generator_factory(config.prompt_file_set_picture)
+    if prompt_generator == "sequence":
+        prompt_generator = config.prompt_generator_factory(config.prompt_file_set_picture,config._prompt_generator_sequence)
+    elif prompt_generator == "random":
+        prompt_generator = config.prompt_generator_factory(config.prompt_file_set_picture,config._prompt_generator_random)
     prompt_words = prompt_generator()
 
     logging.info(f"连接服务器...")
@@ -390,8 +393,13 @@ if __name__ == "__main__":
     parser.add_argument("--direct", action="store_true", help="use workflow direct")
     parser.add_argument("-n", "--num", help="creat num", type=int)
     parser.add_argument("--server", help="what server will be used", type=str)
+    parser.add_argument("--prompt-generator", help="mode of prompt generator(random/sequence)", type=str)
 
     args = parser.parse_args()
+    prompt_generator_mode = "random"
+    if args.prompt_generator:
+        prompt_generator_mode = args.prompt_generator
+
     if args.num:
         num = args.num
 
@@ -412,13 +420,13 @@ if __name__ == "__main__":
         creat_imageMask(create_num = num)
     elif args.picture:
         logging.info("创建图片")
-        create_num = create_picture(num)
+        create_num = create_picture(num,prompt_generator_mode)
     elif args.video:
         logging.info("创建视频")
         create_num = create_video_ITV(num)
     elif args.all:
         logging.info("创建图片")
-        create_num = create_picture(num)
+        create_num = create_picture(num,prompt_generator_mode)
         logging.info("创建视频")
         create_video_ITV(create_num)
     elif args.direct:

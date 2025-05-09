@@ -1,1 +1,3 @@
-1,enable,0,masterpiece, best quality, realistic, photo, bust, real,
+1,enable,1,fluxdStyle/aidmaRealisticPeoplePhotograph-FLUX-V0.2.safetensors,0.20,masterpiece, best quality, realistic, photo, bust, real,
+1,enable,1,fluxdStyle/UltraRealPhoto.safetensors,0.30,masterpiece, best quality, realistic, photo, bust, real,low lighting
+1,enable,1,fluxdStyle/UltraRealPhoto.safetensors,0.50,masterpiece, best quality, realistic, photo, bust, real,smeared foreground

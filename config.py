@@ -2,6 +2,7 @@ import csv
 import logging
 import random
 import os
+from itertools import cycle
 
 # 全局设定
 log_level = logging.DEBUG
@@ -121,42 +122,76 @@ def split_to_lora_prompt(row):
         logging.error(f"发生错误: {str(e)}")
         return [], ""
 
-def prompt_generator_factory(prompt_file_set):
+prompt_arrays = []
+def _prompt_generator_random():
+    """
+    生成器函数：生成prompt
+    """
+    # 检查数组是否为空
+    for arr in prompt_arrays:
+        i= 1+1
+        if not arr:
+            arr.append('')
+            global_vars = globals()
+            for name, value in global_vars.items():
+                if isinstance(value, list) and value is arr:
+                    logging.warning(f"提示词数组{arr}为空")
+    while True:
+        logging.info(f"生成提示词和Lora配置...")
+        selected_lines = []
+        selected_loras = []
+        for arr in prompt_arrays:
+            idx = random.choice(range(len(arr)))  # 随机选择索引
+            lora,prompt = split_to_lora_prompt(arr[idx])
+            selected_lines.append(prompt)
+            selected_loras.extend(lora)
+
+        # 拼接成字符串
+        prompt = ','.join(selected_lines)
+        logging.info(f"生成的提示词: {prompt}")
+        logging.info(f"应加载的lora index: {selected_loras}")
+        yield prompt,selected_loras
+
+def _prompt_generator_sequence():
+    """
+    生成器函数：生成prompt
+    """
+    # 检查数组是否为空
+    for arr in prompt_arrays:
+        i= 1+1
+        if not arr:
+            arr.append('')
+            global_vars = globals()
+            for name, value in global_vars.items():
+                if isinstance(value, list) and value is arr:
+                    logging.warning(f"提示词数组{arr}为空")
+    # 创建循环迭代器
+    iter = []
+    for arr in prompt_arrays:
+        iter.append (cycle(arr) if arr else cycle([None]))
+
+    while True:
+        logging.info(f"生成提示词和Lora配置...")
+        selected_lines = []
+        selected_loras = []
+        for arr in iter:
+            lora,prompt = split_to_lora_prompt(next(arr))
+            selected_lines.append(prompt)
+            selected_loras.extend(lora)
+
+        # 拼接成字符串
+        prompt = ','.join(selected_lines)
+        logging.info(f"生成的提示词: {prompt}")
+        logging.info(f"应加载的lora index: {selected_loras}")
+        yield prompt,selected_loras
+
+def prompt_generator_factory(prompt_file_set,generator_func = _prompt_generator_random):
     logging.info(f"读取提示词配置...")
+    global prompt_arrays
     prompt_arrays = []
     for each in prompt_file_set:
         prompt_arrays.append(process_csv_to_array(each))
-
-    def _prompt_generator():
-        """
-        生成器函数：生成prompt
-        """
-        # 检查数组是否为空
-        for arr in prompt_arrays:
-            i= 1+1
-            if not arr:
-                arr.append('')
-                global_vars = globals()
-                for name, value in global_vars.items():
-                    if isinstance(value, list) and value is arr:
-                        logging.warning(f"提示词数组{arr}为空")
-
-        while True:
-            logging.info(f"生成提示词和Lora配置...")
-            selected_lines = []
-            selected_loras = []
-            for arr in prompt_arrays:
-                idx = random.choice(range(len(arr)))  # 随机选择索引
-                lora,prompt = split_to_lora_prompt(arr[idx])
-                selected_lines.append(prompt)
-                selected_loras.extend(lora)
-    
-            # 拼接成字符串
-            prompt = ','.join(selected_lines)
-            logging.info(f"生成的提示词: {prompt}")
-            logging.info(f"应加载的lora index: {selected_loras}")
-            yield prompt,selected_loras
-    return _prompt_generator
+    return generator_func
     
     
 def get_jpg_files(directory):
@@ -183,7 +218,7 @@ def get_jpg_files(directory):
 
 ##unit test
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s %(filename)s:%(lineno)d - %(message)s')
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s %(filename)s:%(lineno)d - %(message)s')
 
     print("test process_csv_to_array")
     prompts = process_csv_to_array(prompt_file_role)
@@ -192,11 +227,11 @@ if __name__ == "__main__":
     print("test prompt_generator_factory")
     prompt_generator = prompt_generator_factory(prompt_file_set_video)
     prompt_gen = prompt_generator()
-    for i in range(2):
+    for i in range(10):
         next(prompt_gen)
 
     print("test prompt_generator_factory")
-    prompt_generator = prompt_generator_factory(prompt_file_set_picture)
+    prompt_generator = prompt_generator_factory(prompt_file_set_picture,_prompt_generator_sequence)
     prompt_gen = prompt_generator()
-    for i in range(2):
+    for i in range(10):
         next(prompt_gen)
