@@ -284,7 +284,7 @@ def create_video_ITV(create_num=10):
         except StopIteration:
             logging.info("已经没有更多的prompt了,结束程序")
             break
-        obj_workflow.write_json_file(f"workflow_output_{create_counter}.json")
+        #obj_workflow.write_json_file(f"workflow_output_{create_counter}.json")
         for i in range(config.one_prompt_multi_create):
             images = get_videos(ws, obj_workflow,client_id)
             #save_file(images, config.output_folder, "video")
